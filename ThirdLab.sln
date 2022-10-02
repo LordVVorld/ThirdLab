@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdLab", "ThirdLab\ThirdLab.csproj", "{46F7894B-B9B1-4177-A3C6-AE9BCBD726A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46F7894B-B9B1-4177-A3C6-AE9BCBD726A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46F7894B-B9B1-4177-A3C6-AE9BCBD726A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46F7894B-B9B1-4177-A3C6-AE9BCBD726A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46F7894B-B9B1-4177-A3C6-AE9BCBD726A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCDACC2A-9154-4C4B-BD1A-1DFEF3C6AB60}
+	EndGlobalSection
+EndGlobal
