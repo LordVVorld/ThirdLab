@@ -15,7 +15,8 @@ namespace ThirdLab
 
             public Point(double x, double y)
             {
-                X = x; Y = y; 
+                X = x;
+                Y = y; 
             }
 
             public static Point operator *(Point point, double scalar) => new Point(point.X * scalar, point.Y * scalar);
