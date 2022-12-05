@@ -1,5 +1,8 @@
 ﻿using ReactiveUI;
 using System.Windows.Forms;
+using System;
+using System.Reactive.Disposables;
+
 
 namespace ThirdLab
 {
@@ -8,7 +11,7 @@ namespace ThirdLab
         public TLView()
         {
             InitializeComponent();
-
+            ViewModel = new TLViewModel();
             this.WhenActivated(a =>
             {
                 a(this.Bind(ViewModel, vm => vm.PointScalar, v => v.multiplyPointScalarBox.Text));
@@ -19,13 +22,13 @@ namespace ThirdLab
                 a(this.Bind(ViewModel, vm => vm.UnEqualityCheckPointSet, v => v.unEqualityCheckPointSetBox.Text));
                 a(this.Bind(ViewModel, vm => vm.OffsetPointSet, v => v.offsetPointSetBox.Text));
                 a(this.Bind(ViewModel, vm => vm.IsAdditionOffsetOperation, v => v.offsetPointSetOperationPlusButton.Checked));
-                a(this.Bind(ViewModel, vm => vm.PointMultiplayResult, v => v.multiplyPointResultBox.Text));
-                a(this.Bind(ViewModel, vm => vm.PointSetMultiplayResult, v => v.multiplyPointSetResultBox.Text));
-                a(this.Bind(ViewModel, vm => vm.PointEqualityCheckResult, v => v.equalityCheckPointResultBox.Text));
-                a(this.Bind(ViewModel, vm => vm.PointSetEqualityCheckResult, v => v.equalityCheckPointSetResultBox.Text));
-                a(this.Bind(ViewModel, vm => vm.PointUnEqualityCheckResult, v => v.unEqualityCheckPointResultBox.Text));
-                a(this.Bind(ViewModel, vm => vm.PointSetUnEqualityCheckResult, v => v.unEqualityCheckPointSetResultBox.Text));
-                a(this.Bind(ViewModel, vm => vm.OffsetPointSetResult, v => v.offsetPointSetResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.PointMultiplyResult, v => v.multiplyPointResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.PointSetMultiplyResult, v => v.multiplyPointSetResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.PointEqualityCheckResult, v => v.equalityCheckPointResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.PointSetEqualityCheckResult, v => v.equalityCheckPointSetResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.PointUnEqualityCheckResult, v => v.unEqualityCheckPointResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.PointSetUnEqualityCheckResult, v => v.unEqualityCheckPointSetResultBox.Text));
+                a(this.OneWayBind(ViewModel, vm => vm.OffsetPointSetResult, v => v.offsetPointSetResultBox.Text));
                 a(this.BindCommand(ViewModel, vm => vm.PointMultiply, v => v.multiplyPointButton));
                 a(this.BindCommand(ViewModel, vm => vm.PointSetMultiply, v => v.multiplyPointSetButton));
                 a(this.BindCommand(ViewModel, vm => vm.PointEqualityCheck, v => v.equalityCheckPointButton));
@@ -34,7 +37,6 @@ namespace ThirdLab
                 a(this.BindCommand(ViewModel, vm => vm.PointSetUnEqualityCheck, v => v.unEqualityCheckPointSetButton));
                 a(this.BindCommand(ViewModel, vm => vm.PointSetOffset, v => v.offsetPointSetButton));
             });
-            ViewModel = new TLViewModel();
         }
 
         object IViewFor.ViewModel

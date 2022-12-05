@@ -1,36 +1,40 @@
 ﻿using ReactiveUI;
 using System.Reactive;
+using System.Reactive.Linq;
+using System.Windows.Forms;
+using System;
+using static ThirdLab.TLModel;
 
 namespace ThirdLab
 {
     public class TLViewModel : ReactiveObject
     {
-        private double _pointScalar;
-        public double PointScalar
+        private string _pointScalar;
+        public string PointScalar
         {
             get => _pointScalar;
             set => this.RaiseAndSetIfChanged(ref _pointScalar, value);
         }
 
-        private string _pointMultiplayResult;
-        public string PointMultiplayResult
+        private string _pointMultiplyResult;
+        public string PointMultiplyResult
         {
-            get => _pointMultiplayResult;
-            set => this.RaiseAndSetIfChanged(ref _pointMultiplayResult, value);
+            get => _pointMultiplyResult;
+            set => this.RaiseAndSetIfChanged(ref _pointMultiplyResult, value);
         }
 
-        private double _pointSetScalar;
-        public double PointSetScalar
+        private string _pointSetScalar;
+        public string PointSetScalar
         {
             get => _pointSetScalar;
             set => this.RaiseAndSetIfChanged(ref _pointSetScalar, value);
         }
 
-        private string _pointSetMultiplayResult;
-        public string PointSetMultiplayResult
+        private string _pointSetMultiplyResult;
+        public string PointSetMultiplyResult
         {
-            get => _pointSetMultiplayResult;
-            set => this.RaiseAndSetIfChanged(ref _pointSetMultiplayResult, value);
+            get => _pointSetMultiplyResult;
+            set => this.RaiseAndSetIfChanged(ref _pointSetMultiplyResult, value);
         }
 
         private string _equalityCheckPoint;
@@ -113,43 +117,42 @@ namespace ThirdLab
 
         public TLViewModel()
         {
-            PointMultiply = ReactiveCommand.Create(() =>
-            {
-                PointMultiplayResult = TLModel.PointMultiply(PointScalar);
-            });
-            PointSetMultiply = ReactiveCommand.Create(() =>
-            {
-                PointSetMultiplayResult = TLModel.PointSetMultiply(PointSetScalar);
-            });
-            PointEqualityCheck = ReactiveCommand.Create(() =>
-            {
-                PointEqualityCheckResult = TLModel.PointEqualityCheck(EqualityCheckPoint);
-            });
-            PointSetEqualityCheck = ReactiveCommand.Create(() =>
-            {
-                PointSetEqualityCheckResult = TLModel.PointSetEqualityCheck(EqualityCheckPointSet);
-            });
-            PointUnEqualityCheck = ReactiveCommand.Create(() =>
-            {
-                PointUnEqualityCheckResult = TLModel.PointUnEqualityCheck(UnEqualityCheckPoint);
-            });
-            PointSetUnEqualityCheck = ReactiveCommand.Create(() =>
-            {
-                PointSetUnEqualityCheckResult = TLModel.PointSetUnEqualityCheck(UnEqualityCheckPointSet);
-            });
-            PointSetOffset = ReactiveCommand.Create(() =>
-            {
-                OffsetPointSetResult = TLModel.PointSetOffset(OffsetPointSet, IsAdditionOffsetOperation);
-            });
+            PointMultiply = ReactiveCommand
+                .Create(() => PointMultiplyResult = PointMultiply(PointScalar));
+            PointMultiply.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
+            
+            PointSetMultiply = ReactiveCommand
+                .Create(() => PointSetMultiplyResult = PointSetMultiply(PointSetScalar));
+            PointSetMultiply.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
+
+            PointEqualityCheck = ReactiveCommand
+                .Create(() => PointEqualityCheckResult = PointEqualityCheck(EqualityCheckPoint));
+            PointEqualityCheck.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
+
+            PointSetEqualityCheck = ReactiveCommand
+                .Create(() => PointSetEqualityCheckResult = PointSetEqualityCheck(EqualityCheckPointSet));
+            PointSetEqualityCheck.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
+
+            PointUnEqualityCheck = ReactiveCommand
+                .Create(() => PointUnEqualityCheckResult = PointUnEqualityCheck(UnEqualityCheckPoint));
+            PointUnEqualityCheck.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
+
+            PointSetUnEqualityCheck = ReactiveCommand
+                .Create(() => PointSetUnEqualityCheckResult = PointSetUnEqualityCheck(UnEqualityCheckPointSet));
+            PointSetUnEqualityCheck.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
+
+            PointSetOffset = ReactiveCommand
+                .Create(() => OffsetPointSetResult = PointSetOffset(OffsetPointSet, IsAdditionOffsetOperation));
+            PointSetOffset.ThrownExceptions.Subscribe(error => MessageBox.Show(error.Message, "Внимание!"));
         }
 
-        public ReactiveCommand<Unit, Unit> PointMultiply { get; private set; }
-        public ReactiveCommand<Unit, Unit> PointSetMultiply { get; private set; }
-        public ReactiveCommand<Unit, Unit> PointEqualityCheck { get; private set; }
-        public ReactiveCommand<Unit, Unit> PointSetEqualityCheck { get; private set; }
-        public ReactiveCommand<Unit, Unit> PointUnEqualityCheck { get; private set; }
-        public ReactiveCommand<Unit, Unit> PointSetUnEqualityCheck { get; private set; }
-        public ReactiveCommand<Unit, Unit> PointSetOffset { get; private set; }
+        public ReactiveCommand<Unit, string> PointMultiply { get; private set; }
+        public ReactiveCommand<Unit, string> PointSetMultiply { get; private set; }
+        public ReactiveCommand<Unit, bool> PointEqualityCheck { get; private set; }
+        public ReactiveCommand<Unit, bool> PointSetEqualityCheck { get; private set; }
+        public ReactiveCommand<Unit, bool> PointUnEqualityCheck { get; private set; }
+        public ReactiveCommand<Unit, bool> PointSetUnEqualityCheck { get; private set; }
+        public ReactiveCommand<Unit, string> PointSetOffset { get; private set; }
     }
 }
 

@@ -59,6 +59,7 @@
             System.Windows.Forms.GroupBox multiplyPointSetGroupBox;
             System.Windows.Forms.Label multiplyPointSetResultLabel;
             System.Windows.Forms.Label multiplyPointSetLabel;
+            System.Windows.Forms.Label label1;
             this.equalityCheckPointButton = new System.Windows.Forms.Button();
             this.equalityCheckPointResultBox = new System.Windows.Forms.TextBox();
             this.equalityCheckPointBox = new System.Windows.Forms.TextBox();
@@ -113,6 +114,7 @@
             multiplyPointSetGroupBox = new System.Windows.Forms.GroupBox();
             multiplyPointSetResultLabel = new System.Windows.Forms.Label();
             multiplyPointSetLabel = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
             pointGroupBox.SuspendLayout();
             equalityCheckPointGroupBox.SuspendLayout();
             unEqualityCheckPointGroupBox.SuspendLayout();
@@ -182,6 +184,7 @@
             // equalityCheckPointBox
             // 
             this.equalityCheckPointBox.Location = new System.Drawing.Point(58, 13);
+            this.equalityCheckPointBox.MaxLength = 50;
             this.equalityCheckPointBox.Name = "equalityCheckPointBox";
             this.equalityCheckPointBox.Size = new System.Drawing.Size(100, 20);
             this.equalityCheckPointBox.TabIndex = 3;
@@ -240,6 +243,7 @@
             // unEqualityCheckPointBox
             // 
             this.unEqualityCheckPointBox.Location = new System.Drawing.Point(58, 13);
+            this.unEqualityCheckPointBox.MaxLength = 50;
             this.unEqualityCheckPointBox.Name = "unEqualityCheckPointBox";
             this.unEqualityCheckPointBox.Size = new System.Drawing.Size(100, 20);
             this.unEqualityCheckPointBox.TabIndex = 3;
@@ -294,6 +298,7 @@
             this.multiplyPointResultBox.ReadOnly = true;
             this.multiplyPointResultBox.Size = new System.Drawing.Size(138, 20);
             this.multiplyPointResultBox.TabIndex = 5;
+            this.multiplyPointResultBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // multiplyPointResultLabel
             // 
@@ -307,6 +312,7 @@
             // multiplyPointScalarBox
             // 
             this.multiplyPointScalarBox.Location = new System.Drawing.Point(58, 13);
+            this.multiplyPointScalarBox.MaxLength = 10;
             this.multiplyPointScalarBox.Name = "multiplyPointScalarBox";
             this.multiplyPointScalarBox.Size = new System.Drawing.Size(100, 20);
             this.multiplyPointScalarBox.TabIndex = 3;
@@ -332,6 +338,7 @@
             // 
             // pointsGroupBox
             // 
+            pointsGroupBox.Controls.Add(label1);
             pointsGroupBox.Controls.Add(unEqualityCheckPointSetGroupBox);
             pointsGroupBox.Controls.Add(offsetPointSetGroupBox);
             pointsGroupBox.Controls.Add(pointSetExampleBox);
@@ -389,6 +396,7 @@
             // unEqualityCheckPointSetBox
             // 
             this.unEqualityCheckPointSetBox.Location = new System.Drawing.Point(74, 16);
+            this.unEqualityCheckPointSetBox.MaxLength = 200;
             this.unEqualityCheckPointSetBox.Name = "unEqualityCheckPointSetBox";
             this.unEqualityCheckPointSetBox.Size = new System.Drawing.Size(100, 20);
             this.unEqualityCheckPointSetBox.TabIndex = 3;
@@ -448,12 +456,12 @@
             this.offsetPointSetOperationMinusButton.Name = "offsetPointSetOperationMinusButton";
             this.offsetPointSetOperationMinusButton.Size = new System.Drawing.Size(14, 13);
             this.offsetPointSetOperationMinusButton.TabIndex = 4;
-            this.offsetPointSetOperationMinusButton.TabStop = true;
             this.offsetPointSetOperationMinusButton.UseVisualStyleBackColor = true;
             // 
             // offsetPointSetOperationPlusButton
             // 
             this.offsetPointSetOperationPlusButton.AutoSize = true;
+            this.offsetPointSetOperationPlusButton.Checked = true;
             this.offsetPointSetOperationPlusButton.Location = new System.Drawing.Point(68, 42);
             this.offsetPointSetOperationPlusButton.Name = "offsetPointSetOperationPlusButton";
             this.offsetPointSetOperationPlusButton.Size = new System.Drawing.Size(14, 13);
@@ -491,6 +499,7 @@
             // offsetPointSetBox
             // 
             this.offsetPointSetBox.Location = new System.Drawing.Point(58, 13);
+            this.offsetPointSetBox.MaxLength = 50;
             this.offsetPointSetBox.Name = "offsetPointSetBox";
             this.offsetPointSetBox.Size = new System.Drawing.Size(132, 20);
             this.offsetPointSetBox.TabIndex = 3;
@@ -525,18 +534,18 @@
             // 
             // pointSetExampleBox
             // 
-            pointSetExampleBox.Location = new System.Drawing.Point(260, 81);
+            pointSetExampleBox.Location = new System.Drawing.Point(266, 96);
             pointSetExampleBox.Name = "pointSetExampleBox";
             pointSetExampleBox.ReadOnly = true;
             pointSetExampleBox.Size = new System.Drawing.Size(168, 20);
             pointSetExampleBox.TabIndex = 1;
-            pointSetExampleBox.Text = "{(2;5;1),(1;1;3),(4;3;7)}";
+            pointSetExampleBox.Text = "{(2;5;1).(1;1;3).(4;3;7)}";
             pointSetExampleBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pointSetExampleLabel
             // 
             pointSetExampleLabel.AutoSize = true;
-            pointSetExampleLabel.Location = new System.Drawing.Point(257, 35);
+            pointSetExampleLabel.Location = new System.Drawing.Point(263, 50);
             pointSetExampleLabel.Name = "pointSetExampleLabel";
             pointSetExampleLabel.Size = new System.Drawing.Size(171, 39);
             pointSetExampleLabel.TabIndex = 0;
@@ -588,6 +597,7 @@
             // equalityCheckPointSetBox
             // 
             this.equalityCheckPointSetBox.Location = new System.Drawing.Point(74, 16);
+            this.equalityCheckPointSetBox.MaxLength = 200;
             this.equalityCheckPointSetBox.Name = "equalityCheckPointSetBox";
             this.equalityCheckPointSetBox.Size = new System.Drawing.Size(100, 20);
             this.equalityCheckPointSetBox.TabIndex = 3;
@@ -646,6 +656,7 @@
             // multiplyPointSetBox
             // 
             this.multiplyPointSetBox.Location = new System.Drawing.Point(58, 13);
+            this.multiplyPointSetBox.MaxLength = 10;
             this.multiplyPointSetBox.Name = "multiplyPointSetBox";
             this.multiplyPointSetBox.Size = new System.Drawing.Size(100, 20);
             this.multiplyPointSetBox.TabIndex = 3;
@@ -659,6 +670,16 @@
             multiplyPointSetLabel.Size = new System.Drawing.Size(47, 13);
             multiplyPointSetLabel.TabIndex = 2;
             multiplyPointSetLabel.Text = "Скаляр:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(245, 16);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(204, 26);
+            label1.TabIndex = 12;
+            label1.Text = "Разделитель точек множества - точка.\r\nДробный разделитель - запятая.";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TLView
             // 

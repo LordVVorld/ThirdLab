@@ -1,5 +1,4 @@
 ﻿using DynamicData;
-using DynamicData.Kernel;
 using System;
 using System.Collections.Generic;
 
@@ -7,8 +6,8 @@ namespace ThirdLab
 {
     public class TLModel
     {
-        private static Point examplePoint = new Point(2, 5, 1);
-        private static Points examplePointSet = new Points(
+        private static readonly Point examplePoint = new Point(2, 5, 1);
+        private static readonly Points examplePointSet = new Points(
             new List<Point>{
                 new Point(2, 5, 1),
                 new Point(1, 1, 3),
@@ -29,9 +28,6 @@ namespace ThirdLab
             }
 
             public static Point operator *(Point point, double scalar) => new Point(point.X * scalar, point.Y * scalar, point.Z * scalar);
-            public static Point operator *(Point point, int scalar) => new Point(point.X * scalar, point.Y * scalar, point.Z * scalar);
-            public static Point operator *(Point point, long scalar) => new Point(point.X * scalar, point.Y * scalar, point.Z * scalar);
-            public static Point operator *(Point point, short scalar) => new Point(point.X * scalar, point.Y * scalar, point.Z * scalar);
 
             public static bool operator ==(Point left, Point right)
             {
@@ -52,6 +48,23 @@ namespace ThirdLab
             }
 
             public override string ToString() => $"({X};{Y};{Z})";
+
+            public override bool Equals(object obj)
+            {
+                return obj is Point point &&
+                       X == point.X &&
+                       Y == point.Y &&
+                       Z == point.Z;
+            }
+
+            public override int GetHashCode()
+            {
+                int hashCode = -307843816;
+                hashCode = hashCode * -1521134295 + X.GetHashCode();
+                hashCode = hashCode * -1521134295 + Y.GetHashCode();
+                hashCode = hashCode * -1521134295 + Z.GetHashCode();
+                return hashCode;
+            }
         }
 
         public class Points
@@ -66,47 +79,43 @@ namespace ThirdLab
 
             public static Points operator+(Points points, Point vector)
             {
-                points.Collection.ForEach(point =>
+                List<Point> collection = new List<Point>();
+                foreach (var point in points.Collection)
                 {
-                    point.X += vector.X;
-                    point.Y += vector.Y;
-                    point.Z += vector.Z;
-                });
-                return points;
+                    collection.Add(
+                        new Point(
+                            point.X + vector.X,
+                            point.Y + vector.Y,
+                            point.Z + vector.Z)
+                        );
+                }
+                return new Points(collection);
             }
 
             public static Points operator -(Points points, Point vector)
             {
-                points.Collection.ForEach(point =>
+                List<Point> collection = new List<Point>();
+                foreach (var point in points.Collection)
                 {
-                    point.X -= vector.X;
-                    point.Y -= vector.Y;
-                    point.Z -= vector.Z;
-                });
-                return points;
+                    collection.Add(
+                        new Point(
+                            point.X - vector.X,
+                            point.Y - vector.Y,
+                            point.Z - vector.Z)
+                        );
+                }
+                return new Points(collection);
             }
 
             public static Points operator *(Points points, double scalar)
             {
-                points.Collection.ForEach(point => { point *= scalar; });
-                return new Points(points.Collection);
+                List<Point> collection = new List<Point>();
+                foreach (var point in points.Collection)
+                {
+                    collection.Add(point * scalar);
+                }
+                return new Points(collection);
             }
-            public static Points operator *(Points points, int scalar)
-            {
-                points.Collection.ForEach(point => { point *= scalar; });
-                return new Points(points.Collection);
-            }
-            public static Points operator *(Points points, long scalar)
-            {
-                points.Collection.ForEach(point => { point *= scalar; });
-                return new Points(points.Collection);
-            }
-            public static Points operator *(Points points, short scalar)
-            {
-                points.Collection.ForEach(point => { point *= scalar; });
-                return new Points(points.Collection);
-            }
-
 
             public static bool operator ==(Points left, Points right)
             {
@@ -145,77 +154,151 @@ namespace ThirdLab
                 string result = "{";
                 foreach (var point in Collection)
                 {
-                    result += point.ToString() + ",";
+                    result += point.ToString() + ".";
                 }
-                result += "}";
+                result = result.Remove(result.LastIndexOf('.')) + "}";
                 return result;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is Points points &&
+                       EqualityComparer<List<Point>>.Default.Equals(Collection, points.Collection) &&
+                       Count == points.Count;
+            }
+
+            public override int GetHashCode()
+            {
+                int hashCode = 1676771821;
+                hashCode = hashCode * -1521134295 + EqualityComparer<List<Point>>.Default.GetHashCode(Collection);
+                hashCode = hashCode * -1521134295 + Count.GetHashCode();
+                return hashCode;
             }
         }
 
-        public static string PointMultiply(double scalar) => (examplePoint * scalar).ToString();
-        public static string PointSetMultiply(double scalar) => (examplePointSet * scalar).ToString();
-        public static bool PointEqualityCheck(string point) => examplePoint == StringToPoint(point);
-        public static bool PointSetEqualityCheck(string pointSet) => examplePointSet == StringToPointSet(pointSet);
-        public static bool PointUnEqualityCheck(string point) => examplePoint != StringToPoint(point);
-        public static bool PointSetUnEqualityCheck(string pointSet) => examplePointSet != StringToPointSet(pointSet);
-        public static string PointSetOffset(string point, bool isAddition)
+        public static string PointMultiply(string scalar)
         {
-            return isAddition ?
-                (examplePointSet + StringToPoint(point)).ToString():
-                (examplePointSet - StringToPoint(point)).ToString();
+            if(!double.TryParse(scalar, out double value))
+            {
+                throw new Exception("Некорректно задан скаляр");
+            };
+            return (examplePoint * value).ToString();
+        }
+            
+        public static string PointSetMultiply(string scalar)
+        {
+            if (!double.TryParse(scalar, out double value))
+            {
+                throw new Exception("Некорректно задан скаляр");
+            };
+            return (examplePointSet * value).ToString();
         }
 
-        static Point StringToPoint(string value)
+        public static bool PointEqualityCheck(string point)
         {
-            if (value is null)
+            PointValidation(point);
+            return examplePoint == StrToPoint(point);
+        }
+
+        public static bool PointSetEqualityCheck(string pointSet)
+        {
+            PointSetValidation(pointSet);
+            return examplePointSet == StrToPointSet(pointSet);
+        }
+
+        public static bool PointUnEqualityCheck(string point)
+        {
+            PointValidation(point);
+            return examplePoint != StrToPoint(point);
+        }
+        
+        public static bool PointSetUnEqualityCheck(string pointSet)
+        {
+            PointSetValidation(pointSet);
+            return examplePointSet != StrToPointSet(pointSet);
+        }
+
+        public static string PointSetOffset(string point, bool isAddition)
+        {
+            PointValidation(point);
+            return (isAddition ?
+                (examplePointSet + StrToPoint(point)) :
+                (examplePointSet - StrToPoint(point))
+            ).ToString();
+        }
+
+        static Point StrToPoint(string point)
+        {
+            string[] values = point.Split(new char[] { '(', ';', ')' },
+                                          StringSplitOptions.RemoveEmptyEntries);
+            double[] coords = new double[3];
+            for (int index = 0; index < 3; index++)
+            {
+                coords[index] = double.Parse(values[index]);
+            }
+            return new Point(coords[0], coords[1], coords[2]);
+        }
+
+        static Points StrToPointSet(string pointSet)
+        {
+            string[] points = pointSet.Split(new char[] { '{', '.', '}' },
+                                             StringSplitOptions.RemoveEmptyEntries);
+            List<Point> pointList = new List<Point>();
+            foreach (var point in points)
+            {
+                pointList.Add(StrToPoint(point));
+            }
+            return new Points(pointList);
+        }
+    
+        static void PointValidation(string point)
+        {
+            if (point is null)
             {
                 throw new Exception("Не задано значение точки.");
             }
-            string[] values = value.Split(new char[] { '(', ';', ')' }, StringSplitOptions.RemoveEmptyEntries);
-            if (values.Length != 3)
+
+            string[] coords = point.Split(new char[] { '(', ';', ')' }, StringSplitOptions.RemoveEmptyEntries);
+            if (coords.Length != 3)
             {
                 throw new Exception("Некорректно задано значение точки.");
             }
+
             Dictionary<int, char> indexedCoords = new Dictionary<int, char>()
             {
                 { 0, 'X'},
                 { 1, 'Y'},
                 { 2, 'Z'}
             };
-            bool[] coordsValidity = new bool[3];
-            double[] coords = new double[3];
             for (int index = 0; index < 3; index++)
             {
-                coordsValidity[index] = double.TryParse(values[index], out coords[index]);
-                if (!coordsValidity[index])
+                if(!double.TryParse(coords[index], out double value))
                 {
                     throw new Exception($"Некорректное значение {indexedCoords[index]}.");
                 }
             }
-            return new Point(coords[0], coords[1], coords[2]);
         }
 
-        static Points StringToPointSet(string value)
+        static void PointSetValidation(string pointSet)
         {
-            if (value is null)
+            if (pointSet is null)
             {
                 throw new Exception("Не задано значение множества.");
             }
-            
-            string[] values = value.Split(new char[] { '{', ',', '}' }, StringSplitOptions.RemoveEmptyEntries);
-            List<Point> points = new List<Point>();
-            for (int index = 0; index < values.Length; index++)
+            string[] points = pointSet.Split(new char[] { '{', '.', '}' },
+                                             StringSplitOptions.RemoveEmptyEntries);
+            foreach (var point in points)
             {
                 try
                 {
-                    points.Add(StringToPoint(values[index]));
+                    PointValidation(point);
                 }
                 catch (Exception e)
                 {
+                    int index = points.IndexOf(point) + 1;
                     throw new Exception($"Точка {index}. {e.Message}");
                 }
             }
-            return new Points(points);
         }
     }
 }
