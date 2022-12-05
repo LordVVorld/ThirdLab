@@ -41,6 +41,7 @@
             System.Windows.Forms.Label multiplyPointScalarLabel;
             System.Windows.Forms.Label pointExampleLabel;
             System.Windows.Forms.GroupBox pointsGroupBox;
+            System.Windows.Forms.Label label1;
             System.Windows.Forms.GroupBox unEqualityCheckPointSetGroupBox;
             System.Windows.Forms.Label unEqualityCheckPointSetResultLabel;
             System.Windows.Forms.Label unEqualityCheckPointSetLabel;
@@ -59,7 +60,6 @@
             System.Windows.Forms.GroupBox multiplyPointSetGroupBox;
             System.Windows.Forms.Label multiplyPointSetResultLabel;
             System.Windows.Forms.Label multiplyPointSetLabel;
-            System.Windows.Forms.Label label1;
             this.equalityCheckPointButton = new System.Windows.Forms.Button();
             this.equalityCheckPointResultBox = new System.Windows.Forms.TextBox();
             this.equalityCheckPointBox = new System.Windows.Forms.TextBox();
@@ -96,6 +96,7 @@
             multiplyPointScalarLabel = new System.Windows.Forms.Label();
             pointExampleLabel = new System.Windows.Forms.Label();
             pointsGroupBox = new System.Windows.Forms.GroupBox();
+            label1 = new System.Windows.Forms.Label();
             unEqualityCheckPointSetGroupBox = new System.Windows.Forms.GroupBox();
             unEqualityCheckPointSetResultLabel = new System.Windows.Forms.Label();
             unEqualityCheckPointSetLabel = new System.Windows.Forms.Label();
@@ -114,7 +115,6 @@
             multiplyPointSetGroupBox = new System.Windows.Forms.GroupBox();
             multiplyPointSetResultLabel = new System.Windows.Forms.Label();
             multiplyPointSetLabel = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
             pointGroupBox.SuspendLayout();
             equalityCheckPointGroupBox.SuspendLayout();
             unEqualityCheckPointGroupBox.SuspendLayout();
@@ -351,6 +351,16 @@
             pointsGroupBox.TabIndex = 1;
             pointsGroupBox.TabStop = false;
             pointsGroupBox.Text = "Множество точек";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(245, 16);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(204, 26);
+            label1.TabIndex = 12;
+            label1.Text = "Разделитель точек множества - точка.\r\nДробный разделитель - запятая.";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // unEqualityCheckPointSetGroupBox
             // 
@@ -671,16 +681,6 @@
             multiplyPointSetLabel.TabIndex = 2;
             multiplyPointSetLabel.Text = "Скаляр:";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(245, 16);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(204, 26);
-            label1.TabIndex = 12;
-            label1.Text = "Разделитель точек множества - точка.\r\nДробный разделитель - запятая.";
-            label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // TLView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -688,6 +688,7 @@
             this.ClientSize = new System.Drawing.Size(481, 439);
             this.Controls.Add(pointsGroupBox);
             this.Controls.Add(pointGroupBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "TLView";
             this.Text = "Точка и множество точек";
             pointGroupBox.ResumeLayout(false);
